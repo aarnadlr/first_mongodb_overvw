@@ -11,11 +11,11 @@ mongoose.connect("mongodb://localhost/cat_app", {useMongoClient: true});
 mongoose.Promise = global.Promise;
 
 // 3. DEFINE A SCHEMA
-// Tells Mongoose and our javascript that I want to be able to
-//  add cats to our datatbase, and a cat should be defined as these
-//  three key value pairs and types!!
+// Tells Mongoose (and thus MongoDB) that I want to be able to
+//  add cats to our database, and a cat should be defined as these
+//  three key value pairs *and types*!!
 //  Defines a PATTERN and STRUCTURE for our DATA
-//  "The pure pattern"
+//  "The pure pattern" (can be revised flexibly later)
 var catSchema = new mongoose.Schema({
   name: String,
   age: Number,
@@ -25,14 +25,17 @@ var catSchema = new mongoose.Schema({
 
 
 // 4. CREATE A MODEL
-//Take the catSchema data pattern and COMPILE it into a MODEL called Cat
+//Takes the catSchema data pattern and COMPILE it into a MODEL we want to call Cat.
 // We can now use Cat to make NEW cats, FIND cats, UPDATE cats
 // --> ie Cat.find, Cat.remove, Cat.create
 //      Cat now has all the mongoDB methods we want to use
+//  This line determines the COLLECTION NAME: cats (pluralizes this!)
+//  CREATES --> "db.cats" (DB IS PLURAL)
 var Cat = mongoose.model("Cat", catSchema)
 
 
-// add a new cat to db
+// ** FIRST WAY TO ADD or CREATE A NEW CAT.
+//    (Longer; two parts)
 
 // var george = new Cat({
 //   name: "Mrs. Norris",
@@ -51,7 +54,7 @@ var Cat = mongoose.model("Cat", catSchema)
 // });
 
 // 5. INTERACT WITH THE DATABASE
-//SECOND WAY TO ADD or CREATE A NEW CAT.
+// ** SECOND WAY TO ADD or CREATE A NEW CAT.
 // new Cat and george.save ALL AT ONCE:
 Cat.create({
   name: "Snow White",
@@ -67,17 +70,31 @@ Cat.create({
   }
 });
 
-// retrieve ALL cats from db
+
+// using the FIND method:
+// To retrieve/display ALL cats from db
     // AND console.log each
 
 Cat.find({}, function(err, cats) {
   if(err) {
-    console.log("ON HO, ERROR!");
+    console.log("OH NO, ERROR!");
     console.log(err);
   } else {
     console.log("ALL THE CATS: ");
     console.log(cats);
   }
 });
+
+
+
+
+
+
+
+
+
+
+
+
 
 
